@@ -1,0 +1,24 @@
+plugins {
+  id 'java-library'
+}
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(17))
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+	implementation 'com.google.code.gson:gson:2.8.8'
+	implementation 'io.netty:netty-all:4.1.68.Final'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+	useJUnitPlatform()
+}
