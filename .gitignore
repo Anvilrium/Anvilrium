@@ -5,6 +5,7 @@
 build
 
 #eclipse
+bin
 .project
 .settings
 .classpath
