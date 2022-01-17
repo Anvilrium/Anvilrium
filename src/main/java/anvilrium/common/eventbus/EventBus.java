@@ -34,14 +34,14 @@ public class EventBus implements IEventBus {
 	public void fire(IEvent event) {
 		if (event != null) {
 			List<Consumer<IEvent>> list = listeners.get(event.getClass());
-			List<Callable<?>> list1 = Collections.emptyList();
+			List<Callable<Void>> list1 = Collections.emptyList();
 			if (list != null) {
 				list1 = list.stream()
-						.<Callable<?>>map(consumer -> {
+						.<Callable<Void>>map(consumer -> {
 							return new Callable<>() {
 
 								@Override
-								public Object call() {
+								public Void call() {
 									consumer.accept(event);
 									return null;
 								}

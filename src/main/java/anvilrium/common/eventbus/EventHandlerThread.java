@@ -15,7 +15,7 @@ public class EventHandlerThread extends Thread {
 	protected IEventBus eventBus;
 	protected ExecutorService executorService;
 	protected volatile boolean isShuttingDown;
-	protected BlockingQueue<Pair<IEvent, Collection<Callable<?>>>> eventQueue;
+	protected BlockingQueue<Pair<IEvent, Collection<Callable<Void>>>> eventQueue;
 
 	public EventHandlerThread(EventBus bus, int threadCount) {
 		this.eventBus = bus;
@@ -24,7 +24,7 @@ public class EventHandlerThread extends Thread {
 		this.setName(eventBus.getName() + "-Handler-Thread");
 	}
 
-	public boolean addEvent(Pair<IEvent, Collection<Callable<?>>> listeners) {
+	public boolean addEvent(Pair<IEvent, Collection<Callable<Void>>> listeners) {
 		if (!isShuttingDown) {
 			eventQueue.add(listeners);
 			return true;
@@ -40,7 +40,7 @@ public class EventHandlerThread extends Thread {
 
 		while (!(isInterrupted() || (isShuttingDown && eventQueue.isEmpty()))) {
 			try {
-				Pair<IEvent, Collection<Callable<?>>> eventPair = eventQueue.take();
+				Pair<IEvent, Collection<Callable<Void>>> eventPair = eventQueue.take();
 				executorService.invokeAll(eventPair.getSecond());
 				eventPair.getFirst().getFuture().complete(eventPair.getFirst());
 			} catch (InterruptedException e) {
