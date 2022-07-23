@@ -1,5 +1,6 @@
 package anvilrium.common;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class Resource {
@@ -16,7 +17,7 @@ public class Resource {
 		this(new ResourceLocation(resourceLocation));
 	}
 	
-	public InputStream getResourceAsStream() {
+	public InputStream getResourceAsStream() throws FileNotFoundException {
 		if (cachedInputStream == null) {
 			cachedInputStream = FileUtils.getFileFromResourceAsStream(resourceLocation.getLocation());
 		}
