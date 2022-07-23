@@ -49,5 +49,9 @@ public class EventHandlerThread extends Thread {
 			}
 		}
 	}
+	
+	public void startShutdown() {
+		isShuttingDown = true;
+	}
 
 }

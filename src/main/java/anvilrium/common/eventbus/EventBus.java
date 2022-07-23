@@ -112,6 +112,7 @@ public class EventBus implements IEventBus {
 
 	@Override
 	public void shutdown() {
+		handlerThread.startShutdown();
 		try {
 			this.handlerThread.join();
 		} catch (InterruptedException e) {
