@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import anvilrium.common.Pair;
 import anvilrium.common.events.IEvent;
@@ -40,9 +41,11 @@ public class EventHandlerThread extends Thread {
 
 		while (!(isInterrupted() || (isShuttingDown && eventQueue.isEmpty()))) {
 			try {
-				Pair<IEvent, Collection<Callable<Void>>> eventPair = eventQueue.take();
-				executorService.invokeAll(eventPair.getSecond());
-				eventPair.getFirst().getFuture().complete(eventPair.getFirst());
+				Pair<IEvent, Collection<Callable<Void>>> eventPair = eventQueue.poll(100, TimeUnit.MILLISECONDS);
+				if (eventPair != null) {
+					executorService.invokeAll(eventPair.getSecond());
+					eventPair.getFirst().getFuture().complete(eventPair.getFirst());
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				Thread.currentThread().interrupt();
