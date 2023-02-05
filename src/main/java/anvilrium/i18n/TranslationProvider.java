@@ -70,13 +70,13 @@ public class TranslationProvider {
 							+ " is not present in new language " + newLanguage);
 				}
 
-				translations.put(key, new Translation(val, isFallback));
+				translations.put(key, new Translation(key, val, isFallback));
 
 			}
 		}
 	}
 
-	private record Translation(String translation, boolean isFallback) {
+	private record Translation(String key, String translation, boolean isFallback) {
 	}
 
 }
