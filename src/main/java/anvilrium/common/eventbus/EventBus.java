@@ -1,5 +1,6 @@
 package anvilrium.common.eventbus;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -12,6 +13,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import anvilrium.common.Pair;
 import anvilrium.common.events.IEvent;
 
@@ -22,12 +26,19 @@ public class EventBus implements IEventBus {
 	protected final Map<Class<? extends IEvent>, List<Consumer<IEvent>>> listeners;
 	protected final String name;
 	protected final EventHandlerThread handlerThread;
+	protected final Logger LOGGER;
 
 	public EventBus(String name) {
+		this(name, 10);
+	}
+	
+	public EventBus(String name, int handlerThreadCount) {
 		this.name = name;
+		this.LOGGER = LogManager.getLogger(name+"-Event-Handler");
 		this.listeners = new ConcurrentHashMap<>();
-		this.handlerThread = new EventHandlerThread(this, 10);
+		this.handlerThread = new EventHandlerThread(this, handlerThreadCount);
 		handlerThread.start();
+		
 	}
 
 	@Override
@@ -37,15 +48,9 @@ public class EventBus implements IEventBus {
 			List<Callable<Void>> list1 = Collections.emptyList();
 			if (list != null) {
 				list1 = list.stream()
-						.<Callable<Void>>map(consumer -> {
-							return new Callable<>() {
-
-								@Override
-								public Void call() {
-									consumer.accept(event);
-									return null;
-								}
-							};
+						.<Callable<Void>>map(consumer -> () -> {
+							consumer.accept(event);
+							return null;
 						}).toList();
 			}
 			handlerThread.addEvent(new Pair<>(event, list1));
@@ -71,15 +76,12 @@ public class EventBus implements IEventBus {
 	}
 
 	private void registerListenerMethod(Object target, Method method) {
-		Consumer<IEvent> consumer = new Consumer<>() {
-
-			@Override
-			public void accept(IEvent t) {
-				try {
-					method.invoke(target, t);
-				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-				}
+		//TODO convert to MethodHandle
+		Consumer<IEvent> consumer = (event) -> {
+			try {
+				method.invoke(target, event);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				LOGGER.error("Exception invoking event listener.", e);
 			}
 		};
 
@@ -116,7 +118,7 @@ public class EventBus implements IEventBus {
 		try {
 			this.handlerThread.join();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			LOGGER.catching(e);
 		}
 	}
 
