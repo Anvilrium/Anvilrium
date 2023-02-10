@@ -22,7 +22,6 @@ public class Renderer implements Runnable {
 	
 	MainWindow mainWindow = MainWindow.INSTANCE;
 	
-
 	TablePanel tablePanel = new TablePanel();
 
 	@Override
@@ -48,12 +47,13 @@ public class Renderer implements Runnable {
 				e.printStackTrace();
 			}
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				//TODO replace with Logger
 				e.printStackTrace();
 			}
+			//FIXME do not use paint here
 			tablePanel.paint(tablePanel.getGraphics());
 		}
 	}
@@ -91,6 +91,7 @@ public class Renderer implements Runnable {
 		pna.add(bplus);
 		pna.add(zoomText);
 		mainWindow.add(pna, BorderLayout.SOUTH);
+		mainWindow.setIgnoreRepaint(true);
 		mainWindow.setVisible(true);
 	}
 
