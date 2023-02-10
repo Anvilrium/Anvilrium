@@ -13,6 +13,7 @@ public class Game {
 	}
 	
 	private void showCrashReport(Throwable t) {
+		//TODO replace with Logger
 		t.printStackTrace();
 	}
     

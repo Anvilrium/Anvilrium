@@ -37,6 +37,7 @@ public class BoardTile implements Element {
 		try {
 			return texture.getImage();
 		} catch (IOException | NullPointerException e) {
+			//TODO replace with Logger
 			e.printStackTrace();
 			return new ImageIcon().getImage();
 		}

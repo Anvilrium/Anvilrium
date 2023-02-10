@@ -41,14 +41,17 @@ public class Renderer implements Runnable {
 				preRenderEvent.getFuture().get();
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
+				//TODO replace with Logger
 				e.printStackTrace();
 			} catch (ExecutionException e) {
+				//TODO replace with Logger
 				e.printStackTrace();
 			}
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
+				//TODO replace with Logger
 				e.printStackTrace();
 			}
 			tablePanel.paint(tablePanel.getGraphics());

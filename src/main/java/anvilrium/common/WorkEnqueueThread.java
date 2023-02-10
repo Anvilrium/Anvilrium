@@ -24,6 +24,7 @@ public class WorkEnqueueThread extends Thread {
 			workList.put(callable);
 			return true;
 		} catch (InterruptedException e) {
+			//TODO replace with Logger
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		}
@@ -37,6 +38,7 @@ public class WorkEnqueueThread extends Thread {
 				try {
 					executorService.submit(workList.take());
 				} catch (InterruptedException e) {
+					//TODO replace with Logger
 					e.printStackTrace();
 					Thread.currentThread().interrupt();
 				}

@@ -47,6 +47,7 @@ public class EventHandlerThread extends Thread {
 					eventPair.getFirst().getFuture().complete(eventPair.getFirst());
 				}
 			} catch (InterruptedException e) {
+				//TODO replace with Logger
 				e.printStackTrace();
 				Thread.currentThread().interrupt();
 			}
