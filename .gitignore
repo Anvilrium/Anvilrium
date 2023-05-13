@@ -9,3 +9,5 @@ bin
 .project
 .settings
 .classpath
+
+doc
