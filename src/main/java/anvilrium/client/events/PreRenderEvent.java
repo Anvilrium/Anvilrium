@@ -1,7 +1,7 @@
 package anvilrium.client.events;
 
-import anvilrium.common.events.AbstractEvent;
+import anvilrium.common.events.Event;
 
-public class PreRenderEvent extends AbstractEvent {
+public class PreRenderEvent extends Event {
 
 }
