@@ -2,7 +2,11 @@ import org.gradle.internal.os.OperatingSystem
 
 plugins {
 	id 'java-library'
+	id 'jacoco'
 }
+
+group = project.group
+archivesBaseName = "anvilrium"
 
 project.ext.lwjglVersion = "3.3.1"
 
@@ -69,4 +73,16 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+    	xml.required = true
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.10"
 }
