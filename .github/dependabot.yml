@@ -6,3 +6,8 @@ updates:
       interval: "weekly"
     reviewers:
       - Ambossmann
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
