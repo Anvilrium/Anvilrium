@@ -8,8 +8,6 @@ plugins {
 group = project.group
 archivesBaseName = "anvilrium"
 
-project.ext.lwjglVersion = "3.3.1"
-
 switch (OperatingSystem.current()) {
 	case OperatingSystem.LINUX:
 		project.ext.lwjglNatives = "natives-linux"
@@ -37,7 +35,7 @@ repositories {
 
 dependencies {
 	//LWJGL
-	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+	implementation platform("org.lwjgl:lwjgl-bom:3.3.1")
 	implementation "org.lwjgl:lwjgl"
 	implementation "org.lwjgl:lwjgl-glfw"
 	implementation "org.lwjgl:lwjgl-libdivide"
