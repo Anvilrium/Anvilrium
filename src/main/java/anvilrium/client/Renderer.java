@@ -26,36 +26,9 @@ public class Renderer implements Runnable {
 
 	@Override
 	public void run() {
-		startup();
-		RENDER_EVENT_BUS.register(this);
-		renderLoop();
 	}
 	
 	private void renderLoop() {
-		//TODO remove while true loop
-		while (true) {
-			PreRenderEvent preRenderEvent = new PreRenderEvent();
-			RENDER_EVENT_BUS.fire(preRenderEvent);
-			try {
-				preRenderEvent.getFuture().get();
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				//TODO replace with Logger
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				//TODO replace with Logger
-				e.printStackTrace();
-			}
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				//TODO replace with Logger
-				e.printStackTrace();
-			}
-			//FIXME do not use paint here
-			tablePanel.paint(tablePanel.getGraphics());
-		}
 	}
 	
 	public void startup() {
