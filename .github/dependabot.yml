@@ -6,6 +6,8 @@ updates:
       interval: "weekly"
     reviewers:
       - Ambossmann
+    assignees:
+      - Ambossmann
 
   - package-ecosystem: github-actions
     directory: /
