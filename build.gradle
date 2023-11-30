@@ -19,7 +19,7 @@ switch (OperatingSystem.current()) {
 
 java {
 	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(20))
+		languageVersion.set(JavaLanguageVersion.of(21))
 	}
 	withSourcesJar()
 	withJavadocJar()
@@ -64,12 +64,12 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.10.1'
 	implementation 'com.google.guava:guava:32.1.2-jre'
 	implementation 'io.netty:netty5-all:5.0.0.Alpha5'
-	implementation 'org.apache.logging.log4j:log4j-api:2.21.0'
-	implementation 'org.apache.logging.log4j:log4j-core:2.21.0'
+	implementation 'org.apache.logging.log4j:log4j-api:2.22.0'
+	implementation 'org.apache.logging.log4j:log4j-core:2.22.0'
 	implementation 'org.apache.commons:commons-rng-sampling:1.5'
 	implementation 'org.apache.commons:commons-rng-simple:1.5'
 
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
