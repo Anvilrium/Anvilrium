@@ -11,6 +11,14 @@ archivesBaseName = "anvilrium"
 switch (OperatingSystem.current()) {
 	case OperatingSystem.LINUX:
 		project.ext.lwjglNatives = "natives-linux"
+		def osArch = System.getProperty("os.arch")
+		if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+			project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+		} else if  (osArch.startsWith("ppc")) {
+			project.ext.lwjglNatives += "-ppc64le"
+		} else if  (osArch.startsWith("riscv")) {
+			project.ext.lwjglNatives += "-riscv64"
+		}
 		break
 	case OperatingSystem.WINDOWS:
 		project.ext.lwjglNatives = "natives-windows"
