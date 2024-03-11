@@ -72,7 +72,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.10.1'
 	implementation 'com.google.guava:guava:32.1.2-jre'
 	implementation 'io.netty:netty5-all:5.0.0.Alpha5'
-	implementation 'org.apache.logging.log4j:log4j-api:2.22.0'
+	implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
 	implementation 'org.apache.logging.log4j:log4j-core:2.22.0'
 	implementation 'org.apache.commons:commons-rng-sampling:1.5'
 	implementation 'org.apache.commons:commons-rng-simple:1.5'
